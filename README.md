@@ -1,5 +1,5 @@
 **QuickMinds**  
-A Webstack Portfolio Project for the award of Software Engneering certificates at ALX Africa.
+A Webstack Portfolio Project for the award of Software Engneering certificate at ALX Africa.
 
 **Project Description**  
 Quickminds is an interactive quiz application where users can answer multiple-choice questions  
@@ -28,4 +28,4 @@ By the end if this project I hope to have a firm grasp of various concepts. Amon
 Name: Mutisya Musee  
 Twitter: [Mutisya](https://x.com/MutisyaMusee)
 
-He has refused to call Twitter X!
+Yes, I still call it Twitter!
