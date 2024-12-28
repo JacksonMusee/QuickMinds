@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid d-flex flex-grow-1">
+    <div class="row align-items-center bg-light flex-grow-1">
+        <div class="col-6 align-items-end">
+            <img src="{{ url_for('static', filename='images/snap.png') }}"
+            class="img-fluid mh-100 object-fit-contain" alt="">
+        </div>
+        <div class="col-6 align-items-start">
+            <h1>Oops!</h1>
+            <p class="fs-3">{{ error_message }} There was a snap.</p>
+            <button class="btn btn-primary rounded-pill w-50">Go to Homepage</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

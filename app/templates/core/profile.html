@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center flex-column">
+    <!--Profile and Name-->
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <img src="{{ url_for('static', filename='images/user.webp') }}" alt="Story" class="rounded-circle max-h-100 max-h-100 img-fluid">
+        </div>
+        <div class="text-center">
+            <h3> Mutisya Musee</h3>
+            <p class="text-secondary">Mwene Game</p>
+        </div>        
+    </div>
+    <!--Profile Summary card-->
+    <div class="card bg-primary w-75 mt-3 p-3 rounded-5">
+        <div class="card-body row">
+            <div class="col-4">
+                <div class="card-title text-center text-white border-end border-light">
+                    <h5>Total Points</h5>
+                    <p class="card-text fw-bold fs-1">3</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card-title text-center text-white border-end border-light">
+                    <h5>Quizes Taken</h5>
+                    <p class="card-text fw-bold fs-1">3</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card-title text-center text-white">
+                    <h5>Average Score</h5>
+                    <p class="card-text fw-bold fs-1">3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Buttons-->
+    <div class="col-9 text-center mt-5">
+        <h5 >Past Results <span><i class="bi bi-trophy fw-bold fs-3 ms-3 text-secondary"></i></span></h5>
+    </div>
+    <!--Past Results-->
+    <div class="card w-75 mt-3 p-3 rounded-5">
+        <div class="card-body row ms-5 me-5 border-bottom border-1 border-primary">
+            <div class="col-6">
+                <div class="d-flex"><p>Quiz Name: </p><p class="fw-bold ms-2"> 3</p></div>
+                <div class="d-flex"><p>Category: </p><p class="fw-bold ms-2"> 3</p></div>
+                <div class="d-flex"><p>Date taken: </p><p class="fw-bold ms-2"> 3</p></div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex"><p>Score: </p><p class="fw-bold ms-2"> 3</p></div>
+                <div class="d-flex"><p>Time spent: </p><p class="fw-bold ms-2"> 3</p></div>
+                <div class="d-flex"><p>Points earned: </p><p class="fw-bold ms-2"> 3</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
