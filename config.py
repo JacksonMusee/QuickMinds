@@ -1,4 +1,4 @@
-"""This modules contains configurations variables for differnt emviroment
+"""This module contains configuration variables for differnt environments
 """
 
 
@@ -7,6 +7,7 @@ class DefaultConfig:
     """
     SECRET_KEY = "9382714629836764"
     SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite3"
+    # SQLALCHEMY_DATABASE_URI = "mysql://root:1121@localhost/quickminds"
 
 
 class DevelopmentConfig(DefaultConfig):

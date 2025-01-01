@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page_title }}</title>
+    <title>QuickMinds | {{ title }}</title>
 
     <!-- Bootstrap css-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_bootstrap.css') }}">
@@ -17,7 +17,7 @@
         <!--Navbar start-->
         <nav class="navbar navbar-expand-lg sticky-top bg-primary text-white fw-bold p-3 d-flex">
             <div class="container-fluid d-flex justify-content-between ps-5 pe-5">
-                <a href="{{ url_for('core_main_bp.index') }}" class="navbar-brand text-white">QuickMinds</a>
+                <a href="{{ url_for('ordinary_bp.index') }}" class="navbar-brand text-white">QuickMinds</a>
                 <div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -31,13 +31,30 @@
                         </li>
                     </ul>
                 </div>
-                <div class="d-flex">
-                    <a href="#" class="nav-link text-white me-3"><span class="me-1"><i class="bi bi-pencil"></i></span> Set Questions</a>
-                    <a href="#" class="nav-link text-white"><span class="me-1"><i class="bi bi-person"></i></span> Profile</a>
+                <div class="d-flex align-items-center">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('access_control_bp.login') }}" class="nav-link text-white"><i class="bi bi-person-check fs-4 fw-bold me-1"></i>Profile</a>
+                        <a href="{{ url_for('access_control_bp.logout') }}" class="nav-link text-white ms-3"><span class="me-1"><i class="bi bi-box-arrow-right fs-4 fw-bold me-1"></i> Logout</a>
+                        {% if current_user.is_admin %}
+                        <a href="{{ url_for('category_bp.settings') }}" class="nav-link text-white me-3"><i class="bi bi-gear ms-5 fs-4 fw-bold"></i></a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ url_for('access_control_bp.login') }}" class="nav-link text-white"><span class="me-1"><i class="bi bi-person-exclamation fs-4 fw-bold"></i></span> Login</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
         <!--Navbar end-->
+        <div class="container bg-light d-flex justify-content-end" >
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible mt-3 me-3" role="alert">
+                    <div>{{ message }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
         {% block content %}
 
         {% endblock %}

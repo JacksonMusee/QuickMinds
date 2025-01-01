@@ -3,33 +3,40 @@
 {% block signup_login_form %}
 <!--Login form here -->
     <div class="row p-4 fw-bold">
-        <a href="" class="col-6 border-bottom border-3 border-primary text-primary text-center p-2 text-decoration-none">
+        <a href="{{ url_for('access_control_bp.login') }}" class="col-6 border-bottom border-3 border-primary text-primary text-center p-2 text-decoration-none">
             Sign in
         </a>
-        <a href="" class="col-6 border-bottom border-3 border-black-50 text-black-50 text-center p-2 text-decoration-none">
+        <a href="{{ url_for('access_control_bp.signup') }}" class="col-6 border-bottom border-3 border-black-50 text-black-50 text-center p-2 text-decoration-none">
             Sign Up
         </a>
     </div>
-    <form action="">
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
         <div class="m-3">
-            <label for="user_email" class="form-label fw-bold">Email</label>
+            <label for="user_email" class="form-label fw-bold">{{ form.email.label }}</label>
             <div class="input-group">
-                <input type="text" class="form-control border-end-0 h" id="user_email" placeholder="Enter Email" aria-describedby="email_icon">
+                {{ form.email(class="form-control border-end-0", id="user_email", placeholder="Enter Email", aria_describedby="email_icon") }}
                 <span class="input-group-text border-start-0 bg-white" id="email_icon"><i class="bi bi-envelope"></i></span>
             </div>
+            {% for error in form.email.errors %}
+                <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3">
-            <label for="user_password" class="form-label fw-bold">Password</label>
+            <label for="user_password" class="form-label fw-bold">{{ form.password.label }}</label>
             <div class="input-group">
-                <input type="password" class="form-control border-end-0 h" id="user_password" placeholder="*******" aria-describedby="pass_icon">
+                {{ form.password(class="form-control border-end-0", id="user_password", placeholder="*******", aria_describedby="pass_icon") }}
                 <span class="input-group-text border-start-0 bg-white" id="pass_icon"><i class="bi bi-eye-slash"></i></span>
             </div>
+            {% for error in form.password.errors %}
+                <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3 d-flex justify-content-end">
-            <a href="" class="text-primary fw-bold"> Forgort Password?</a>
+            <a href="" class="text-primary fw-bold"> Forgot Password?</a>
         </div>
         <div class="m-5 d-grid col-9 mx-auto">
-            <button class="btn btn-primary rounded-pill" type="button">Sign In</button>
+            <button class="btn btn-primary rounded-pill" type="sumbit">Sign In</button>
         </div>
         <div class="row">
             <span class="col-4 "><hr></span>
@@ -40,7 +47,7 @@
             <button class="btn btn-outline-dark rounded-pill fw-bold" type="button"><span"><i class="bi bi-google"></i></span>oogle</button>
         </div>
         <div class="m-3 d-flex justify-content-center fw-bold">
-            Don't have an account? <a href="" class="text-primary ms-2"> Sign Up</a>
+            Don't have an account? <a href="{{ url_for('access_control_bp.signup') }}" class="text-primary ms-2"> Sign Up</a>
         </div>
     </form>
 {% endblock %}

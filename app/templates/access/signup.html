@@ -3,67 +3,80 @@
 {% block signup_login_form %}
 <!--Sign up form here -->
     <div class="row p-4 fw-bold">
-        <a href="" class="col-6 border-bottom border-3 border-black-50 text-black-50 text-center p-2 text-decoration-none">
+        <a href="{{ url_for('access_control_bp.login') }}" class="col-6 border-bottom border-3 border-black-50 text-black-50 text-center p-2 text-decoration-none">
             Sign in
         </a>
-        <a href="" class="col-6 border-bottom border-3 border-primary text-promary text-center p-2 text-decoration-none">
+        <a href="{{ url_for('access_control_bp.signup') }}" class="col-6 border-bottom border-3 border-primary text-promary text-center p-2 text-decoration-none">
             Sign Up
         </a>
     </div>
-    <form action="">
+    <form action="", method="POST">
+        {{ form.hidden_tag() }}
         <div class="m-3">
-            <label for="first_name" class="form-label fw-bold">First Name</label>
+            <label for="first_name" class="form-label fw-bold">{{ form.name.label }}</label>
             <div class="input-group">
-                <input type="text" class="form-control border-end-0 h" id="first_name" placeholder="Enter Name" aria-describedby="person_icon">
+                {{ form.name(class="form-control border-end-0", type="text", id="first_name", placeholder="Enter Name", aria_describedby="person_icon") }}
                 <span class="input-group-text border-start-0 bg-white" id="person_icon"><i class="bi bi-person"></i></span>
             </div>
+            {% for error in form.errors.name %}
+            <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3">
-            <label for="user_email" class="form-label fw-bold">Email</label>
+            <label for="user_email" class="form-label fw-bold">{{ form.email.label }}</label>
             <div class="input-group">
-                <input type="text" class="form-control border-end-0 h" id="user_email" placeholder="Enter Email" aria-describedby="email_icon">
+                {{ form.email(class="form-control border-end-0", id="user_email", placeholder="Enter Email", aria_describedby="email_icon") }}
                 <span class="input-group-text border-start-0 bg-white" id="email_icon"><i class="bi bi-envelope"></i></span>
             </div>
+            {% for error in form.errors.email %}
+            <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3">
-            <label for="user_password" class="form-label fw-bold">Password</label>
+            <label for="user_password" class="form-label fw-bold">{{ form.password.label }}</label>
             <div class="input-group">
-                <input type="password" class="form-control border-end-0 h" id="user_password" placeholder="*******" aria-describedby="pass_icon">
+                {{ form.password(class="form-control border-end-0", id="user_password", placeholder="*******", aria_describedby="pass_icon") }}
                 <span class="input-group-text border-start-0 bg-white" id="pass_icon"><i class="bi bi-eye-slash"></i></span>
             </div>
+            {% for error in form.errors.password %}
+            <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3">
-            <label for="confirm_password" class="form-label fw-bold">Confirm Password</label>
+            <label for="confirm_password" class="form-label fw-bold">{{ form.password_confirm.label }}</label>
             <div class="input-group">
-                <input type="password" class="form-control border-end-0 h" id="confirm_password" placeholder="*******" aria-describedby="pass_icon">
+                {{ form.password_confirm(class="form-control border-end-0", id="confirm_password", placeholder="*******", aria_describedby="pass_icon") }}
                 <span class="input-group-text border-start-0 bg-white" id="pass_icon"><i class="bi bi-eye-slash"></i></span>
             </div>
+            {% for error in form.errors.password_confirm %}
+            <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3">
-            <label class="form-label fw-bold" for="gender_choices">Choose Gender</label>
+            <label class="form-label fw-bold" for="gender_choices">{{ form.gender.label }}</label>
             <div class="p-2 border rounded d-flex justify-content-around" id="gender_choices">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gender_male" value="male">
-                    <label class="form-check-label" for="gender_male">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gender_female" value="female">
-                    <label class="form-check-label" for="gender_female">Female</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gender_other" value="other">
-                    <label class="form-check-label" for="gender_other">Other</label>
-                </div> 
+                {% for subfield in form.gender %}
+                    <div class="form-check form-check-inline">
+                        {{ subfield(class="form-check-input") }}
+                        <label class="form-check-label" for="{{ subfield.id }}">{{ subfield.label }}</label>
+                    </div>
+                {% endfor %}
             </div>
+            {% for error in form.errors.gender %}
+            <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="m-3 mt-4">
             <div class="form-check fw-medium">
-                <input class="form-check-input rounded-circle p-2 me-2" type="checkbox" value="True" id="accept_terms">
-                <label class="form-check-label" for="accept_terms">I accept to all Term, Privacy and Fees </label>
-                </div>                  
+                {{ form.terms_accepted(class="form-check-input rounded-circle p-2 me-2", id="accept_terms") }}
+                <label class="form-check-label" for="accept_terms">{{ form.terms_accepted.label }}</label>
+            </div>
+            {% for error in form.errors.terms_accepted %}
+            <p class="m-2 text-danger">{{ error }}</p>
+            {% endfor %}       
         </div>
         <div class="m-5 d-grid col-9 mx-auto">
-            <button class="btn btn-primary rounded-pill" type="button">Sign up</button>
+            {{ form.submit(class="btn btn-primary rounded-pill") }}
         </div>
         <div class="row">
             <span class="col-4 "><hr></span>
@@ -74,7 +87,7 @@
             <button class="btn btn-outline-dark rounded-pill fw-bold" type="button"><span"><i class="bi bi-google"></i></span>oogle</button>
         </div>
         <div class="m-3 d-flex justify-content-center fw-bold">
-            Already have an account? <a href="" class="text-primary ms-2"> Sign in</a>
+            Already have an account? <a href="{{ url_for('access_control_bp.login') }}" class="text-primary ms-2"> Sign in</a>
         </div>
     </form>
 {% endblock %}
