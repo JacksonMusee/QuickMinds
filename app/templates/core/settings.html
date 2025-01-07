@@ -4,20 +4,21 @@
 <div class="mt-5 pe-5">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+            <button class="nav-link active" id="nav-categories-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="true">
                 Manage Categories</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+            <button class="nav-link" id="nav-questions-tab" data-bs-toggle="tab" data-bs-target="#nav-questions" type="button" role="tab" aria-controls="nav-questions" aria-selected="false">
                 Manage Questions</button>
-            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+            <button class="nav-link" id="nav-fun-facts-tab" data-bs-toggle="tab" data-bs-target="#nav-fun-facts" type="button" role="tab" aria-controls="nav-fun-facts" aria-selected="false">
                 Manage Fun Facts</button>
         </div>
     </nav>
     <div class="tab-content m-5" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+        <!--Start: Manage categories tab content-->
+        <div class="tab-pane fade show active" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab" tabindex="0">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-plus me-2"></i>Create New category</button>
             </div>
-            <!--Popup with a form to create a new category-->
+            <!--Start: Popup with a form to create a new category-->
             <div>
                 <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -46,7 +47,7 @@
                     </div>
                   </div>                  
             </div>
-            <!--End of Popup-->
+            <!--End: Popup-->
             <div class="mt-3">
                 <table class="table">
                     <thead>
@@ -54,45 +55,43 @@
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Date Created</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for category in categories %}
                         <tr>
-                          <th scope="row">{{ category.id }}</th>
-                          <td>{{ category.name }}</td>
-                          <td>unavailable</td>
-                          <td>{{ category.created_on }}</td>
+                          <th scope="row">{{ loop.index }}.</th>
+                          <td>{{ category[0].name }}</td>
+                          <td>{{ category[0].description }}</td>
                           <td>
                             <div class="dropdown">
-                                <i class="bi bi-gear-wide dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#categoryModal{{ category.id }}">Edit</a></li>
-                                    <li><a class="dropdown-item" href="{{ url_for('category_bp.delete_category', id=category.id) }}">Delete</a></li>
-                                </ul>
+                              <i class="bi bi-gear-wide dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                              <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#categoryModal{{ category[0].id }}">Edit</a></li>
+                                  <li><a class="dropdown-item" href="{{ url_for('category_bp.delete_category', id=category[0].id) }}">Delete</a></li>
+                              </ul>
                             </div>
                           </td>
-                          <!--Row updating popup. Hidden by default-->
+                          <!--Start: Row updating popup. Hidden by default-->
                           <div>
-                            <div class="modal fade" id="categoryModal{{ category.id }}" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="categoryModal{{ category[0].id }}" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
-                                    <form action="{{ url_for('category_bp.update_category', id=category.id) }}" method="POST">
-                                      {{ category_form.hidden_tag() }}
+                                    <form action="{{ url_for('category_bp.update_category', id=category[0].id) }}" method="POST">
+                                      {{ category[1].hidden_tag() }}
                                       <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="categoryModalLabel">Updating {{ category.name }} category</h1>
+                                        <h1 class="modal-title fs-5" id="categoryModalLabel">Updating {{ category[0].name }} category</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">
                                         <div class="mb-3">
                                             <label for="categoryName" class="form-label">Name</label>
-                                            {{ category_form.name(class="form-control", id="categoryName", value=category.name) }}
+                                            {{ category[1].name(class="form-control", id="categoryName") }}
                                           </div>
                                           <div class="mb-3">
                                             <label for="categoryDescription" class="form-label">Description</label>
-                                            {{ category_form.description(class="form-control", id="categoryDescription", rows="3", placeholder="unavailable") }}
+                                            {{ category[1].description(class="form-control", id="categoryDescription") }}
                                           </div>
                                       </div>
                                       <div class="modal-footer">
@@ -103,18 +102,225 @@
                                 </div>
                               </div>                  
                         </div>
-                          <!--End of row updating popup-->
+                          <!--End: row updating popup-->
                       {% endfor %}
                       </tr>
                     </tbody>
                   </table>
             </div>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-            ...
+
+        <!--Start: Manage questions tab content-->
+        <div class="tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab" tabindex="0">
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#questionModal"><i class="bi bi-plus me-2"></i>Create New Question</button>
+          </div>
+          <div>
+            {% for question, form in questions %}
+            <div class="card mt-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title">{{ question.category.name }}</h5>
+                  <div class="dropdown">
+                    <i class="bi bi-three-dots-vertical dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#questionModal{{ question.id }}">Edit</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('question_bp.delete_question', id=question.id) }}">Delete</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <p class="card-text">{{ question.question_body }}</p>
+                <div class="card-text ms-3">
+                  <p><i class="bi bi-dot"></i>{{ question.answers.correct_answer }}<i class="bi bi-check2 text-success"></i></p>
+                  <p><i class="bi bi-dot"></i>{{ question.answers.wrong_answers[0] }}</p>
+                  <p><i class="bi bi-dot"></i>{{ question.answers.wrong_answers[1] }}</p>
+                  <p><i class="bi bi-dot"></i>{{ question.answers.wrong_answers[2] }}</p>
+                </div>
+              </div>
+            </div>
+            <!--Start: Popup for updating a question-->
+            <div>
+              <div class="modal fade" id="questionModal{{ question.id }}" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form action="{{ url_for('question_bp.update_question', id=question.id) }}" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="questionModalLabel">Updating Question</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="categoryId" class="form-label">{{ form.category_id.label }}</label>
+                            {{ form.category_id(class="form-control form-select", id="categoryId") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="questionBody" class="form-label">{{ form.body.label }}</label>
+                            {{ form.body(class="form-control", id="questionBody", rows="3") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="correctAnswer" class="form-label">{{ form.correct_answer.label }}</label>
+                            {{ form.correct_answer(class="form-control", id="correctAnswer", rows="1") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="wrong1" class="form-label">{{ form.wrong_1.label }}</label>
+                            {{ form.wrong_1(class="form-control", id="wrong1", rows="1") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="wrong2" class="form-label">{{ form.wrong_2.label }}</label>
+                            {{ form.wrong_2(class="form-control", id="wrong2", rows="1") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="wrong3" class="form-label">{{ form.wrong_3.label }}</label>
+                            {{ form.wrong_3(class="form-control", id="wrong3", rows="1") }}
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>                  
+            </div>
+          <!--End: Popup for updating a question-->
+            {% endfor %}
+          </div>
+            <!--Start: Popup with a form to create a new question-->
+            <div>
+              <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <form action="{{ url_for('question_bp.add_question') }}" method="POST">
+                        {{ question_form.hidden_tag() }}
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="questionModalLabel">New Question</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="categoryId" class="form-label">{{ question_form.category_id.label }}</label>
+                            {{ question_form.category_id(class="form-control form-select", id="categoryId") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="questionBody" class="form-label">{{ question_form.body.label }}</label>
+                            {{ question_form.body(class="form-control", id="questionBody", rows="3") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="correctAnswer" class="form-label">{{ question_form.correct_answer.label }}</label>
+                            {{ question_form.correct_answer(class="form-control", id="correctAnswer", rows="1") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="wrong1" class="form-label">{{ question_form.wrong_1.label }}</label>
+                            {{ question_form.wrong_1(class="form-control", id="wrong1", rows="1") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="wrong2" class="form-label">{{ question_form.wrong_2.label }}</label>
+                            {{ question_form.wrong_2(class="form-control", id="wrong2", rows="1") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="wrong3" class="form-label">{{ question_form.wrong_3.label }}</label>
+                            {{ question_form.wrong_3(class="form-control", id="wrong3", rows="1") }}
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>                  
+          </div>
+          <!--End: Popup-->
         </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-            ...
+
+
+
+        <!--Start: manage fun facts tab content-->
+        <div class="tab-pane fade" id="nav-fun-facts" role="tabpanel" aria-labelledby="nav-fun-facts-tab" tabindex="0">
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#funFactModal"><i class="bi bi-plus me-2"></i>Create New Fun Fact</button>
+          </div>
+          <div>
+            {% for fun_fact in fun_facts %}
+            <hr>
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title">{{ fun_fact[0].category.name }}</h5>
+                  <div class="dropdown">
+                    <i class="bi bi-three-dots-vertical dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#funFactModal{{ fun_fact[0].id }}">Edit</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('fun_fact_bp.delete_fun_fact', id=fun_fact[0].id) }}">Delete</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <p class="card-text">{{ fun_fact[0].fact_body }}</p>
+              </div>
+            </div>
+            <!--Start: Popup for updating a fun fact-->
+            <div>
+              <div class="modal fade" id="funFactModal{{ fun_fact[0].id }}" tabindex="-1" aria-labelledby="funFactModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form action="{{ url_for('fun_fact_bp.update_fun_fact', id=fun_fact[0].id) }}" method="POST">
+                        {{ fun_fact[1].hidden_tag() }}
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="funFactModalLabel">Updating Fun Fact</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="categoryId" class="form-label">{{ fun_fact[1].category_id.label }}</label>
+                            {{ fun_fact[1].category_id(class="form-control form-select", id="categoryId") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="funFactBody" class="form-label">{{ fun_fact[1].body.label }}</label>
+                            {{ fun_fact[1].body(class="form-control", id="funFactBody", rows="3") }}
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>                  
+            </div>
+          <!--End: Popup for updating a fun fact-->
+            {% endfor %}
+          </div>
+            <!--Start: Popup with a form to create a new fun fact-->
+            <div>
+              <div class="modal fade" id="funFactModal" tabindex="-1" aria-labelledby="funFactModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form action="{{ url_for('fun_fact_bp.add_fun_fact') }}" method="POST">
+                        {{ fun_fact_form.hidden_tag() }}
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="funFactModalLabel">New Fun Fact</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="categoryId" class="form-label">{{ fun_fact_form.category_id.label }}</label>
+                            {{ fun_fact_form.category_id(class="form-control form-select", id="categoryId") }}
+                          </div>
+                          <div class="mb-3">
+                            <label for="funFactBody" class="form-label">{{ fun_fact_form.body.label }}</label>
+                            {{ fun_fact_form.body(class="form-control", id="funFactBody", rows="3") }}
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>                  
+          </div>
+          <!--End: Popup-->
         </div>
     </div>
 </div>

@@ -21,3 +21,6 @@ class ProductionConfig(DefaultConfig):
     """
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = ""
+
+
+active_configs = DevelopmentConfig()

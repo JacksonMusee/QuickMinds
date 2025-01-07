@@ -26,7 +26,8 @@ def add_category():
     category_form = CategoryForm()
 
     if category_form.validate_on_submit():
-        category = Category(name=category_form.name.data)
+        category = Category(name=category_form.name.data,
+                            description=category_form.description.data)
 
         try:
             db.session.add(category)
@@ -56,6 +57,7 @@ def update_category(id):
             id=id).first()
         if category:
             category.name = category_form.name.data
+            category.description = category_form.description.data
             try:
                 db.session.commit()
             except Exception as error:
@@ -64,8 +66,7 @@ def update_category(id):
                 flash(message="Updating failed. Try again later", category="danger")
             else:
                 flash(message="Category updated", category="success")
-                return redirect(request.referrer)
-    return render_template("core/settings.html", category_form=category_form, title="settings")
+    return redirect(request.referrer)
 
 
 @category_bp.route("/delete-category/<int:id>")

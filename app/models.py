@@ -33,7 +33,7 @@ class Question(db.Model):
     """This class maps to the Question table in the database
     """
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(64), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     question_body = db.Column(db.Text, nullable=False)
     answers = db.Column(db.JSON, nullable=False, default=dict)
     created_on = db.Column(db.DateTime(
@@ -50,8 +50,11 @@ class Category(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.Text, nullable=False)
     created_on = db.Column(db.DateTime(
         timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+    fun_facts = db.relationship("Fact", backref="category")
+    questions = db.relationship("Question", backref="category")
 
     def __repr__(self):
         """In case someone prints a Category object
@@ -63,8 +66,8 @@ class Fact(db.Model):
     """This class maps to the Fact table in the database
     """
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(64), nullable=False)
     fact_body = db.Column(db.Text, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     created_on = db.Column(db.DateTime(
         timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
