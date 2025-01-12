@@ -1,7 +1,7 @@
 """This module contains definitions for classes which map
 to database tables
 """
-from app import db
+from ..app import db
 from flask_login import UserMixin
 from datetime import datetime, timezone
 
@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     terms_accepted = db.Column(db.Boolean, nullable=False)
     total_points = db.Column(db.Integer, nullable=False, default=0)
     quizes_taken = db.Column(db.Integer, nullable=False, default=0)
-    average_score = db.Column(db.Float, nullable=False, default=0.0)
+    average_score = db.Column(db.Integer, nullable=False, default=0)
     average_quiz_duration = db.Column(db.Integer, nullable=False, default=0)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     created_on = db.Column(db.DateTime(

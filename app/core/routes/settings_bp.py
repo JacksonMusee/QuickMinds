@@ -1,16 +1,19 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from flask_login import login_required
-from app.models import Category, Fact, Question
-from app.core.forms import CategoryForm, FunFactForm, QuestionForm
+from ....app.models import Category, Fact, Question
+from ....app.core.forms import CategoryForm, FunFactForm, QuestionForm
+from ...utils import admin_required
 
 settings_bp = Blueprint("settings_bp", __name__)
 
 
-@settings_bp.route("/settings/", methods=["GET"])
+@settings_bp.route("/settings", methods=["GET"])
 @login_required
+@admin_required
 def settings():
     """Loads the settings page with all the required forms embedded.
     """
+    active_tab = request.args.get("active_tab", "categories")
     category_items = Category.query.all()
     fun_fact_items = Fact.query.all()
     question_items = Question.query.all()
@@ -55,7 +58,7 @@ def settings():
         item = (question, form)
         questions.append(item)
 
-    return render_template("core/settings.html", page_title="settings",
+    return render_template("core/settings.html", title="settings", active_tab=active_tab,
                            categories=categories, category_form=category_form,
                            fun_fact_form=fun_fact_form, fun_facts=fun_facts,
                            question_form=question_form, questions=questions)

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container pt-5">
+    <form action="{{ url_for('ordinary_bp.mark_quiz', quiz_len=quiz_len) }}" method="POST" class="p-3">
+        {% for question in questions %}
+        <div class="card" id="{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
+            <div class="card-header d-flex justify-content-between pe-3 ps-3">
+                <div class="fw-bold">{{ question.category.name }}</div>
+                <div class="fw-bold">{{ loop.index }} of {{ loop.length }}</div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="question{{ question.id }}" class="form-label">{{ question.question_body }}</label>
+                    {% for answer in question.answers %}
+                    <div class="form-check ms-3 mt-3">
+                        <input class="form-check-input" type="radio" name="{{ question.id }}" id="{{ question.index }}-option-{{ loop.index }}" value="{{ answer }}">
+                        <label class="form-check-label" for="{{ question.index }}-option-{{ loop.index }}">{{ answer }}</label>
+                    </div> 
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-start p-3">
+                        {% if not loop.first  %}
+                        <button type="button" class="btn btn-outline-primary" onclick="toggleQuestion('{{ loop.index }}', '{{ loop.index - 1 }}')"><i class="bi bi-arrow-left"></i> Previous</button>
+                        {% endif %}
+                    </div>
+                    <div class="col-6 d-flex justify-content-end p-3">
+                        {% if loop.last %}
+                        <button type="submit" class="btn btn-outline-primary">Submit Quiz</button>
+                        {% else %}
+                        <button type="button" class="btn btn-outline-primary" onclick="toggleQuestion('{{ loop.index }}', '{{ loop.index + 1 }}')">Next <i class="bi bi-arrow-right"></i></button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </form>
+</div>
+{% endblock %}

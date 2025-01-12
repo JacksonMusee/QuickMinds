@@ -29,3 +29,18 @@ class LoginForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Sign In")
+
+
+class PasswordResetForm(FlaskForm):
+    """Take user email for resetting password
+    """
+    email = EmailField("Email address", validators=[DataRequired(
+        "Email is required"), Email("Enter a valid email address")])
+
+
+class NewPasswordForm(FlaskForm):
+    """Form for setting new password
+    """
+    password = PasswordField("New password", validators=[DataRequired()])
+    password_confirm = PasswordField("Enter new password again", validators=[
+                                     DataRequired(), EqualTo("password", message="Passwords must match")])

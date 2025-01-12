@@ -4,17 +4,17 @@
 <div class="mt-5 pe-5">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-categories-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="true">
+            <button class="nav-link {% if active_tab == 'categories' %} active {% endif %}" id="nav-categories-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="true">
                 Manage Categories</button>
-            <button class="nav-link" id="nav-questions-tab" data-bs-toggle="tab" data-bs-target="#nav-questions" type="button" role="tab" aria-controls="nav-questions" aria-selected="false">
+            <button class="nav-link {% if active_tab == 'questions' %} active {% endif %}" id="nav-questions-tab" data-bs-toggle="tab" data-bs-target="#nav-questions" type="button" role="tab" aria-controls="nav-questions" aria-selected="false">
                 Manage Questions</button>
-            <button class="nav-link" id="nav-fun-facts-tab" data-bs-toggle="tab" data-bs-target="#nav-fun-facts" type="button" role="tab" aria-controls="nav-fun-facts" aria-selected="false">
+            <button class="nav-link {% if active_tab == 'fun_facts' %} active {% endif %}" id="nav-fun-facts-tab" data-bs-toggle="tab" data-bs-target="#nav-fun-facts" type="button" role="tab" aria-controls="nav-fun-facts" aria-selected="false">
                 Manage Fun Facts</button>
         </div>
     </nav>
     <div class="tab-content m-5" id="nav-tabContent">
         <!--Start: Manage categories tab content-->
-        <div class="tab-pane fade show active" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab" tabindex="0">
+        <div class="tab-pane fade {% if active_tab == 'categories' %} show active {% endif %}" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab" tabindex="0">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-plus me-2"></i>Create New category</button>
             </div>
@@ -111,7 +111,7 @@
         </div>
 
         <!--Start: Manage questions tab content-->
-        <div class="tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab" tabindex="0">
+        <div class="tab-pane fade {% if active_tab == 'questions' %} show active {% endif %}" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab" tabindex="0">
           <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#questionModal"><i class="bi bi-plus me-2"></i>Create New Question</button>
           </div>
@@ -237,14 +237,13 @@
 
 
         <!--Start: manage fun facts tab content-->
-        <div class="tab-pane fade" id="nav-fun-facts" role="tabpanel" aria-labelledby="nav-fun-facts-tab" tabindex="0">
+        <div class="tab-pane fade {% if active_tab == 'fun_facts' %} show active {% endif %}" id="nav-fun-facts" role="tabpanel" aria-labelledby="nav-fun-facts-tab" tabindex="0">
           <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#funFactModal"><i class="bi bi-plus me-2"></i>Create New Fun Fact</button>
           </div>
           <div>
             {% for fun_fact in fun_facts %}
-            <hr>
-            <div class="card">
+            <div class="card mt-3">
               <div class="card-body">
                 <div class="d-flex justify-content-between">
                   <h5 class="card-title">{{ fun_fact[0].category.name }}</h5>

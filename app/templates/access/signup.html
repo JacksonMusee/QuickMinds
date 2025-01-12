@@ -10,7 +10,7 @@
             Sign Up
         </a>
     </div>
-    <form action="", method="POST">
+    <form action="{{ url_for('access_control_bp.signup') }}", method="POST">
         {{ form.hidden_tag() }}
         <div class="m-3">
             <label for="first_name" class="form-label fw-bold">{{ form.name.label }}</label>

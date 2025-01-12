@@ -3,7 +3,8 @@
 from flask import Blueprint, current_app, flash, redirect, url_for, request, render_template
 from flask_login import login_required
 from ..forms import FunFactForm
-from app.models import Fact, db, Category
+from ....app.models import Fact, db, Category
+import re
 
 fun_fact_bp = Blueprint("fun_fact_bp", __name__)
 
@@ -24,7 +25,6 @@ def add_fun_fact():
     fun_fact_form.category_id.choices = choices
 
     if fun_fact_form.validate_on_submit():
-        print("Form is valid")
         fact = Fact(fact_body=fun_fact_form.body.data,
                     category_id=fun_fact_form.category_id.data)
         try:
@@ -39,7 +39,8 @@ def add_fun_fact():
         else:
             flash(message="Fun fact added successfully", category="success")
 
-    return redirect(request.referrer)
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=fun_facts")
 
 
 @fun_fact_bp.route("/settings/update-fun-fact/<int:id>", methods=["POST"])
@@ -71,7 +72,9 @@ def update_fun_fact(id):
     else:
         flash(
             message=f"Failed. Invalid details", category="danger")
-    return redirect(request.referrer)
+
+    referrer = request.referrer.split("?active_tab=")[0]
+    return (f"{referrer}?active_tab=fun_facts")
 
 
 @fun_fact_bp.route("/settings/delete-fun-fact/<int:id>")
@@ -92,4 +95,19 @@ def delete_fun_fact(id):
     else:
         flash(message="Fun fact not found", category="danger")
 
-    return redirect(request.referrer)
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=fun_facts")
+
+
+@fun_fact_bp.route("/fun-facts")
+@login_required
+def get_fun_facts():
+    """Fetch and return fun facts
+    """
+    page_no = request.args.get("page", 1)
+    page_no = int(page_no)
+    page_size = 20
+    fun_facts = Fact.query.offset(
+        (page_no - 1) * page_size).limit(page_size).all()
+
+    return render_template("core/fun-facts.html", fun_facts=fun_facts, title="Fun-facts")

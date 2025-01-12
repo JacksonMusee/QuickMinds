@@ -15,25 +15,22 @@
 <body>
     <div class="container d-flex flex-column min-vh-100">
         <!--Navbar start-->
-        <nav class="navbar navbar-expand-lg sticky-top bg-primary text-white fw-bold p-3 d-flex">
+        <nav class="navbar navbar-expand-lg sticky-top bg-primary text-white fw-bold p-3 d-flex" style="z-index: 3;">
             <div class="container-fluid d-flex justify-content-between ps-5 pe-5">
                 <a href="{{ url_for('ordinary_bp.index') }}" class="navbar-brand text-white">QuickMinds</a>
                 <div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#home" class="nav-link text-white">Home</a>
+                            <a href="{{ url_for('ordinary_bp.index') }}" class="nav-link text-white">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#popular_categories" class="nav-link text-white">Popular</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#fun_facts" class="nav-link text-white">Fun facts</a>
+                            <a href="{{ url_for('fun_fact_bp.get_fun_facts') }}?page=1" class="nav-link text-white">Fun facts</a>
                         </li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center">
                     {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('access_control_bp.login') }}" class="nav-link text-white"><i class="bi bi-person-check fs-4 fw-bold me-1"></i>Profile</a>
+                        <a href="{{ url_for('ordinary_bp.get_profile') }}" class="nav-link text-white"><i class="bi bi-person-check fs-4 fw-bold me-1"></i>{{ current_user.name }}</a>
                         <a href="{{ url_for('access_control_bp.logout') }}" class="nav-link text-white ms-3"><span class="me-1"><i class="bi bi-box-arrow-right fs-4 fw-bold me-1"></i> Logout</a>
                         {% if current_user.is_admin %}
                         <a href="{{ url_for('settings_bp.settings') }}" class="nav-link text-white me-3"><i class="bi bi-gear ms-5 fs-4 fw-bold"></i></a>
@@ -45,20 +42,38 @@
             </div>
         </nav>
         <!--Navbar end-->
-        <div class="container bg-light d-flex justify-content-end" >
-            {% with messages = get_flashed_messages(with_categories=True) %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible mt-3 me-3" role="alert">
-                    <div>{{ message }}</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
-            {% endwith %}
+
+        <!--Notifications START-->
+        <div aria-live="polite" aria-atomic="true" class="position-relative" style="z-index: 2;">
+            <div class="toast-container top-0 end-0 p-3">
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% for category, message in messages %}
+                        <div class="toast bg-{{ category }}-subtle" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                            <strong class="me-auto text-{{ category }}"><i class="bi bi-bell"></i></strong>
+                            <small class="text-body-secondary">just now</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+            </div>
         </div>
+        <!--Notifications END-->
+
         {% block content %}
 
         {% endblock %}
     </div>
+    <!--Footer-->
+    <div class="text-center m-5 mt-auto">
+        <hr>
+        QuickMinds &copy <span id="currentYear"></span> All Rights Reserved.
+    </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </html>

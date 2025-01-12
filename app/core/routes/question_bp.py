@@ -1,9 +1,9 @@
 """This module defines the a blueprint for routes for managing Question objects
 """
-from flask import Blueprint, current_app, flash, redirect, request
+from flask import Blueprint, current_app, flash, redirect, request, url_for
 from flask_login import login_required
 from ..forms import QuestionForm
-from app.models import Question, db, Category
+from ....app.models import Question, db, Category
 
 question_bp = Blueprint("question_bp", __name__)
 
@@ -44,7 +44,8 @@ def add_question():
         else:
             flash(message="Question added successfully", category="success")
 
-    return redirect(request.referrer)
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=questions")
 
 
 @question_bp.route("/settings/update-question/<int:id>", methods=["POST"])
@@ -84,7 +85,9 @@ def update_question(id):
     else:
         flash(
             message=f"Failed. Invalid details", category="danger")
-    return redirect(request.referrer)
+
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=questions")
 
 
 @question_bp.route("/settings/delete-question/<int:id>")
@@ -105,4 +108,5 @@ def delete_question(id):
     else:
         flash(message="Question not found", category="danger")
 
-    return redirect(request.referrer)
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=questions")

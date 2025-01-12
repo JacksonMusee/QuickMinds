@@ -7,10 +7,15 @@
             <img src="{{ url_for('static', filename='images/snap.png') }}"
             class="img-fluid mh-100 object-fit-contain" alt="">
         </div>
-        <div class="col-6 align-items-start">
+        <div class="col-6 align-items-start pe-5">
             <h1>Oops!</h1>
-            <p class="fs-3">{{ error_message }} There was a snap.</p>
-            <button class="btn btn-primary rounded-pill w-50">Go to Homepage</button>
+            <p class="fs-3">There was a snap.</p>
+            <p>{{ description }}</p>
+            <div class="mt-5">
+                <a href="{{ url_for('ordinary_bp.index') }}">
+                    <button class="btn btn-primary rounded-pill w-50">Go to Homepage</button>
+                </a>
+            </div>
         </div>
     </div>
 </div>

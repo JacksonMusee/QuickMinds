@@ -10,7 +10,7 @@
             Sign Up
         </a>
     </div>
-    <form action="" method="POST">
+    <form action="{{ url_for('access_control_bp.login') }}" method="POST">
         {{ form.hidden_tag() }}
         <div class="m-3">
             <label for="user_email" class="form-label fw-bold">{{ form.email.label }}</label>
@@ -33,7 +33,7 @@
             {% endfor %}
         </div>
         <div class="m-3 d-flex justify-content-end">
-            <a href="" class="text-primary fw-bold"> Forgot Password?</a>
+            <a href="{{ url_for('access_control_bp.reset_password') }}" class="text-primary fw-bold"> Forgot Password?</a>
         </div>
         <div class="m-5 d-grid col-9 mx-auto">
             <button class="btn btn-primary rounded-pill" type="sumbit">Sign In</button>

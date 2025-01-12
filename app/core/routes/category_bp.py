@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, current_app, flash, request, redirect
 from flask_login import login_required
-from app.models import Category
-from app import db
-from app.core.forms import CategoryForm
+from ....app.models import Category
+from ....app import db
+from ....app.core.forms import CategoryForm
 
 category_bp = Blueprint("category_bp", __name__)
 
-
+'''
 @category_bp.route("/settings", methods=["GET"])
 @login_required
 def settings():
@@ -16,6 +16,7 @@ def settings():
     categories = Category.query.all()
 
     return render_template("core/settings.html", page_title="settings", category_form=category_form, categories=categories)
+'''
 
 
 @category_bp.route("/settings/add-category", methods=["POST"])
@@ -42,7 +43,9 @@ def add_category():
             flash(message="Category added successfully", category="success")
     else:
         flash(message="Failed, Invalid details", category="danger")
-    return redirect(request.referrer)
+
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=categories")
 
 
 @category_bp.route("/update-category/<int:id>", methods=["POST"])
@@ -66,7 +69,9 @@ def update_category(id):
                 flash(message="Updating failed. Try again later", category="danger")
             else:
                 flash(message="Category updated", category="success")
-    return redirect(request.referrer)
+
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=categories")
 
 
 @category_bp.route("/delete-category/<int:id>")
@@ -89,4 +94,5 @@ def delete_category(id):
     else:
         flash(message="Category not found", category="danger")
 
-    return redirect(request.referrer)
+    referrer = request.referrer.split("?active_tab=")[0]
+    return redirect(f"{referrer}?active_tab=categories")
