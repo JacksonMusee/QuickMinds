@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, current_app, abort
 from flask_login import login_required, current_user
+from sqlalchemy import func
 from ....app.models import Question, Fact
 from ....app import db
 import random
@@ -29,7 +30,7 @@ def get_profile():
 def get_quiz():
     """Take random questions from the database
     """
-    questions = Question.query.limit(10).all()
+    questions = Question.query.order_by(func.random()).limit(10).all()
 
     for question in questions:
         answers = question.answers.get("wrong_answers")
