@@ -39,7 +39,7 @@ def create_app():
     def load_user(user_id):
         """Required by login_manager to load user from session
         """
-        from ..app.models import User
+        from app.models import User
         return User.query.get(int(user_id))
 
     @app.errorhandler(Exception)
