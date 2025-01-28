@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, current_app, flash, request, redirect
 from flask_login import login_required
-from ....app.models import Category
-from ....app import db
-from ....app.core.forms import CategoryForm
+from app.models import Category
+from app import db
+from app.core.forms import CategoryForm
 
 category_bp = Blueprint("category_bp", __name__)
 

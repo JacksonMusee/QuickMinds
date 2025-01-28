@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required
-from ....app.models import Category, Fact, Question
-from ....app.core.forms import CategoryForm, FunFactForm, QuestionForm
-from ...utils import admin_required
+from app.models import Category, Fact, Question
+from app.core.forms import CategoryForm, FunFactForm, QuestionForm
+from app.utils import admin_required
 
 settings_bp = Blueprint("settings_bp", __name__)
 

@@ -2,8 +2,8 @@
 """
 from flask import Blueprint, current_app, flash, redirect, request, url_for
 from flask_login import login_required
-from ..forms import QuestionForm
-from ....app.models import Question, db, Category
+from app.core.forms import QuestionForm
+from app.models import Question, db, Category
 
 question_bp = Blueprint("question_bp", __name__)
 

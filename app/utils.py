@@ -5,7 +5,7 @@ from flask_login import current_user
 from flask import flash, redirect, request, url_for, session
 from datetime import datetime, timezone, timedelta
 from flask_mail import Message
-from ..app import mail
+from app import mail
 import random
 
 

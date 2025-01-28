@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, current_app, abort
 from flask_login import login_required, current_user
 from sqlalchemy import func
-from ....app.models import Question, Fact
-from ....app import db
+from app.models import Question, Fact
+from app import db
 import random
 import math
 from datetime import datetime

@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_mail import Mail
 from werkzeug.exceptions import HTTPException
-from ..config import active_configs
+from config import active_configs
 import pymysql
 
 
@@ -54,12 +54,12 @@ def create_app():
         return render_template("error.html", description=description, title="Error"), code
 
     # import register blueprints
-    from ..app.core.routes.ordinary import ordinary_bp
-    from ..app.core.routes.settings_bp import settings_bp
-    from ..app.core.routes.category_bp import category_bp
-    from ..app.core.routes.fun_fact_bp import fun_fact_bp
-    from ..app.core.routes.question_bp import question_bp
-    from ..app.access.routes.access_control import access_control_bp
+    from app.core.routes.ordinary import ordinary_bp
+    from app.core.routes.settings_bp import settings_bp
+    from app.core.routes.category_bp import category_bp
+    from app.core.routes.fun_fact_bp import fun_fact_bp
+    from app.core.routes.question_bp import question_bp
+    from app.access.routes.access_control import access_control_bp
 
     app.register_blueprint(ordinary_bp)
     app.register_blueprint(settings_bp)

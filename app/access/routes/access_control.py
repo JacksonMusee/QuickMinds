@@ -4,10 +4,10 @@ logout, change password
 
 from flask import Blueprint, flash, current_app, render_template, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required, current_user
-from ..forms import SignupForm, LoginForm, PasswordResetForm, NewPasswordForm
-from ....app import bcrypt, db
-from ...models import User
-from ...utils import generate_otp, store_otp, send_otp, verify_otp
+from app.access.forms import SignupForm, LoginForm, PasswordResetForm, NewPasswordForm
+from app import bcrypt, db
+from app.models import User
+from app.utils import generate_otp, store_otp, send_otp, verify_otp
 
 access_control_bp = Blueprint('access_control_bp', __name__)
 

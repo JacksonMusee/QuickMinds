@@ -1,7 +1,7 @@
 """This module contains definitions for classes which map
 to database tables
 """
-from ..app import db
+from app import db
 from flask_login import UserMixin
 from datetime import datetime, timezone
 

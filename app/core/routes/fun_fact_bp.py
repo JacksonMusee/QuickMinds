@@ -2,8 +2,8 @@
 """
 from flask import Blueprint, current_app, flash, redirect, url_for, request, render_template
 from flask_login import login_required
-from ..forms import FunFactForm
-from ....app.models import Fact, db, Category
+from app.core.forms import FunFactForm
+from app.models import Fact, db, Category
 import re
 
 fun_fact_bp = Blueprint("fun_fact_bp", __name__)
