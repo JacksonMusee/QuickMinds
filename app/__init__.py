@@ -8,7 +8,6 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_mail import Mail
 from werkzeug.exceptions import HTTPException
-from config import active_configs
 import pymysql
 
 
@@ -26,7 +25,7 @@ def create_app():
     """
     # app initialization and configuration
     app = Flask(__name__)
-    app.config.from_object(active_configs)
+    app.config.from_envvar("QUICKMINDS_CONFIG")
 
     db.init_app(app)
     login_manager.init_app(app)
