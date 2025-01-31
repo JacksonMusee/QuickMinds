@@ -1,6 +1,6 @@
 """This module initialize the application and applies configuration
 """
-
+import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -25,7 +25,9 @@ def create_app():
     """
     # app initialization and configuration
     app = Flask(__name__)
-    app.config.from_envvar("QUICKMINDS_CONFIG")
+
+    file = os.getenv("QUICKMINDS_CONFIG")
+    app.config.from_pyfile(file)
 
     db.init_app(app)
     login_manager.init_app(app)
