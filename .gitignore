@@ -1,8 +1,5 @@
 quickminds_venv
 __pycache__
-quickminds.config
 Dockerfile
 .env
-DOCKER_CLOSED
-config.py
 docker-compose.yml
