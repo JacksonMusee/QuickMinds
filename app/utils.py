@@ -1,12 +1,14 @@
 """This module contains general utility functions.
 """
+import os
+import json
+import random
 from functools import wraps
 from flask_login import current_user
 from flask import flash, redirect, request, url_for, session
 from datetime import datetime, timezone, timedelta
 from flask_mail import Message
 from app import mail
-import random
 
 
 def admin_required(f):
@@ -66,3 +68,20 @@ def verify_otp(otp):
 
     else:
         return True, None
+
+
+class config:
+    pass
+
+
+def advanced_config(configs_str):
+    """This method configuration was necessited by the failure of docker containers to load configurations from files.
+    The function take a string and makes a class object which can be use for configuration
+    """
+    config_obj = config()
+
+    config_dict = json.loads(configs_str)
+    for key, value in config_dict.items():
+        setattr(config_obj, key, value)
+
+    return config_obj

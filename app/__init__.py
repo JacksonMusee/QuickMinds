@@ -1,6 +1,7 @@
 """This module initialize the application and applies configuration
 """
 import os
+import json
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -20,14 +21,23 @@ migrate = Migrate()
 mail = Mail()
 
 
+class config:
+    pass
+
+
 def create_app():
     """Creates and return a flask app object
     """
     # app initialization and configuration
     app = Flask(__name__)
 
-    file = os.getenv("QUICKMINDS_CONFIG")
-    app.config.from_pyfile(file)
+    config_str = os.getenv("QUICKMINDS_CONFIG")
+    config_obj = config()
+    config_dict = json.loads(config_str)
+    for key, value in config_dict.items():
+        setattr(config_obj, key, value)
+
+    app.config.from_object(config_obj)
 
     db.init_app(app)
     login_manager.init_app(app)
