@@ -1,6 +1,6 @@
 """Start application server
 """
-from app import create_app
+from app.factory import create_app
 
 application = create_app()
 

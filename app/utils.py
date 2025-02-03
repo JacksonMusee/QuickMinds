@@ -24,20 +24,15 @@ def admin_required(f):
     return decorated_function
 
 
-def generate_otp():
-    """Generates and stringfyies a random six digit otp
+def generate_otp(email):
+    """Generates, stringfyies and Stores a random six digit otp in session.
     """
-    print("TRying gen otp")
-    return str(random.randint(100000, 999999))
-
-
-def store_otp(otp, email):
-    """Store otp in session
-    """
+    otp = str(random.randint(100000, 999999))
     session["otp"] = otp
     session["otp_expiry"] = datetime.now(timezone.utc) + timedelta(minutes=5)
     session["email"] = email
-    return
+
+    return otp
 
 
 def send_otp(email, otp):

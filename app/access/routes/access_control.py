@@ -7,7 +7,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app.access.forms import SignupForm, LoginForm, PasswordResetForm, NewPasswordForm
 from app import bcrypt, db
 from app.models import User
-from app.utils import generate_otp, store_otp, send_otp, verify_otp
+from app.utils import generate_otp, send_otp, verify_otp
 
 access_control_bp = Blueprint('access_control_bp', __name__)
 
@@ -64,6 +64,7 @@ def login():
         else:
             try:
                 login_user(user)
+                session.permanent = True
             except Exception as error:
                 current_app.logger.error(f"Error logging in user: {
                                          error}", exc_info=True)
@@ -97,8 +98,7 @@ def reset_password():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            otp = generate_otp()
-            store_otp(otp=otp, email=form.email.data)
+            otp = generate_otp(email=form.email.data)
             send_otp(email=user.email, otp=otp)
             return render_template("access/otp.html", title="Password Reset")
         else:
