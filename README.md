@@ -26,6 +26,6 @@ By the end if this project I hope to have a firm grasp of various concepts. Amon
 
 **About the Author**  
 Name: Mutisya Musee  
-Twitter: [Mutisya](https://x.com/MutisyaMusee)
+Twitter: [Mutisya](https://x.com/mutisyia)
 
 Yes, I still call it Twitter!
