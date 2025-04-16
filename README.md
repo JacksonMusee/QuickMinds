@@ -4,7 +4,7 @@ A Webstack Portfolio Project for the award of Software Engneering certificate at
 **Project Description**  
 Quickminds is an interactive quiz application where users can answer multiple-choice questions  
 from various fields of knowledge eg. History, science. Maths etc.  
-The platform implement scoring, time limits, and feedback.
+The platform implements scoring, time limits, and feedback.
 
 **Learning objectives**  
 By the end if this project I hope to have a firm grasp of various concepts. Among them;
