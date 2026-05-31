@@ -34,8 +34,8 @@ def add_category():
             db.session.add(category)
             db.session.commit()
         except Exception as error:
-            current_app.logger.error(f"Error adding category: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error adding category: {error}", exc_info=True)
             db.session.rollback()
             flash(message="Adding category failed. Try again later",
                   category="danger")
@@ -64,8 +64,8 @@ def update_category(id):
             try:
                 db.session.commit()
             except Exception as error:
-                current_app.logger.error(f"Error updating category: {
-                                         error}", exc_info=True)
+                current_app.logger.error(
+                    f"Error updating category: {error}", exc_info=True)
                 flash(message="Updating failed. Try again later", category="danger")
             else:
                 flash(message="Category updated", category="success")
@@ -86,8 +86,8 @@ def delete_category(id):
             db.session.delete(category)
             db.session.commit()
         except Exception as error:
-            current_app.logger.error(f"Error deleting category: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error deleting category: {error}", exc_info=True)
             flash(message="Delete failed, try again later", category="danger")
         else:
             flash(message="Delete successful", category="success")

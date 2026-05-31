@@ -62,8 +62,8 @@ def mark_quiz(quiz_len):
             ((current_user.total_points + points) / (current_user.quizes_taken + 1)) * 100)
         db.session.commit()
     except Exception as error:
-        current_app.logger.error(f"Error saving quiz results: {
-                                 error}", exc_info=True)
+        current_app.logger.error(
+            f"Error saving quiz results: {error}", exc_info=True)
         db.session.rollback()
 
     score = math.floor((points/quiz_len) * 100)

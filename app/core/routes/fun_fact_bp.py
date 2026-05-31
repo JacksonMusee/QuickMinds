@@ -32,8 +32,8 @@ def add_fun_fact():
             db.session.commit()
         except Exception as error:
             db.session.rollback()
-            current_app.logger.error(f"Error adding new fun fact: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error adding new fun fact: {error}", exc_info=True)
             flash(message="Adding fun fact failed. Try again later",
                   category="danger")
         else:
@@ -64,8 +64,8 @@ def update_fun_fact(id):
             try:
                 db.session.commit()
             except Exception as error:
-                current_app.logger.error(f"Error updating fun fact: {
-                                         error}", exc_info=True)
+                current_app.logger.error(
+                    f"Error updating fun fact: {error}", exc_info=True)
                 flash(message="Updating failed. Try again later", category="danger")
             else:
                 flash(message="Fun fact updated", category="success")
@@ -87,8 +87,8 @@ def delete_fun_fact(id):
             db.session.delete(fact)
             db.session.commit()
         except Exception as error:
-            current_app.logger.error(f"Error deleting fun fact: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error deleting fun fact: {error}", exc_info=True)
             flash(message="Delete failed, try again later", category="danger")
         else:
             flash(message="Delete successful", category="success")

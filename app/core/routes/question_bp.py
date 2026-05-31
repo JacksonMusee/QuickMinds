@@ -37,8 +37,8 @@ def add_question():
             db.session.commit()
         except Exception as error:
             db.session.rollback()
-            current_app.logger.error(f"Error adding new question: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error adding new question: {error}", exc_info=True)
             flash(message="Adding question failed. Try again later",
                   category="danger")
         else:
@@ -77,8 +77,8 @@ def update_question(id):
             try:
                 db.session.commit()
             except Exception as error:
-                current_app.logger.error(f"Error updating question: {
-                                         error}", exc_info=True)
+                current_app.logger.error(
+                    f"Error updating question: {error}", exc_info=True)
                 flash(message="Updating failed. Try again later", category="danger")
             else:
                 flash(message="Question updated sucessfully", category="success")
@@ -100,8 +100,8 @@ def delete_question(id):
             db.session.delete(question)
             db.session.commit()
         except Exception as error:
-            current_app.logger.error(f"Error deleting question: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error deleting question: {error}", exc_info=True)
             flash(message="Delete failed, try again later", category="danger")
         else:
             flash(message="Delete successful", category="success")

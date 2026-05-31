@@ -30,8 +30,8 @@ def signup():
             db.session.commit()
         except Exception as error:
             db.session.rollback()
-            current_app.logger.error(f"Error adding new user: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error adding new user: {error}", exc_info=True)
 
             flash(
                 message="An error occured on our side please try again later", category="danger")
@@ -66,8 +66,8 @@ def login():
                 login_user(user)
                 session.permanent = True
             except Exception as error:
-                current_app.logger.error(f"Error logging in user: {
-                                         error}", exc_info=True)
+                current_app.logger.error(
+                    f"Error logging in user: {error}", exc_info=True)
                 flash(
                     message="An error occured on our side please try again later", category="danger")
             else:
