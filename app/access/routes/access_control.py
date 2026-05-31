@@ -137,8 +137,8 @@ def set_new_password():
             db.session.commit()
         except Exception as error:
             db.session.rollback()
-            current_app.logger.error(f"Error saving new password after reset: {
-                                     error}", exc_info=True)
+            current_app.logger.error(
+                f"Error saving new password after reset: {error}", exc_info=True)
             flash(
                 message="Pasword reset failed. Please try again later or contact support", category="danger")
         else:
