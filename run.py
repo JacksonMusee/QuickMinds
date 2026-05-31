@@ -1,4 +1,4 @@
-"""Start application server
+"""Start application serverr
 """
 from app.factory import create_app
 
