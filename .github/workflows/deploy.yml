@@ -1,12 +1,6 @@
 name: Deploy — Build, Push, SSH Deploy
 
 on:
-  push:
-    branches:
-      - main
-      - master
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 permissions:
