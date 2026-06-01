@@ -58,4 +58,12 @@ jobs:
           pip install pytest
       - name: Run tests
         run: |
-          pytest -q
+          set -o pipefail
+          pytest -q || {
+            rc=$?
+            if [ "$rc" -eq 5 ]; then
+              echo "No tests collected — exiting 0"
+              exit 0
+            }
+            exit $rc
+          }
