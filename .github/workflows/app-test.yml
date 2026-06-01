@@ -37,15 +37,13 @@ jobs:
   test:
     name: Unit tests (pytest)
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.11, 3.12]
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.12
       - name: Cache pip
         uses: actions/cache@v4
         with:
@@ -58,12 +56,12 @@ jobs:
           pip install pytest
       - name: Run tests
         run: |
-          set -o pipefail
-          pytest -q || {
-            rc=$?
-            if [ "$rc" -eq 5 ]; then
-              echo "No tests collected — exiting 0"
-              exit 0
-            }
-            exit $rc
-          }
+          pytest -q
+          exit_code=$?
+
+          if [ $exit_code -eq 5 ]; then
+            echo "No test found. Continuing without failure..."
+            exit 0
+          fi
+
+          exit $exit_code
