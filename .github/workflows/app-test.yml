@@ -32,7 +32,7 @@ jobs:
           pip install flake8
       - name: Run flake8
         run: |
-          flake8 . --max-line-length=88 --exit-zero=false
+          flake8 . --max-line-length=88 --exit-zero
 
   test:
     name: Unit tests (pytest)
