@@ -56,12 +56,8 @@ jobs:
           pip install pytest
       - name: Run tests
         run: |
-          pytest -q
-          exit_code=$?
-
-          if [ $exit_code -eq 5 ]; then
-            echo "No test found. Continuing without failure..."
-            exit 0
+          if [ -d "tests" ]; then
+            pytest tests
+          else
+            echo "No tests directory found, skipping tests."
           fi
-
-          exit $exit_code
